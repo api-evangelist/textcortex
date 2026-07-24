@@ -1,0 +1,89 @@
+openapi: 3.0.2
+info:
+  description: OpenAI-compatible TextCortex API for model discovery, chat completions, and responses.
+  title: TextCortex Balance API
+  version: 1.2026.07.20
+servers:
+- description: Production server
+  url: https://api.textcortex.com/v1
+security:
+- BearerAuth: []
+tags:
+- description: Read API credit balance for the current API key.
+  name: Balance
+paths:
+  /balance:
+    get:
+      description: Returns the remaining API credit balance for the authenticated TextCortex API key.
+      operationId: retrieveBalance
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceResponse'
+          description: Successful response
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAIError'
+          description: Missing or invalid API key
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAIError'
+          description: Balance could not be retrieved
+      summary: Retrieve API credit balance
+      tags:
+      - Balance
+components:
+  schemas:
+    OpenAIError:
+      properties:
+        error:
+          properties:
+            code:
+              nullable: true
+              type: string
+            message:
+              type: string
+            param:
+              nullable: true
+              type: string
+            type:
+              enum:
+              - invalid_request_error
+              - server_error
+              type: string
+          required:
+          - message
+          - type
+          type: object
+      required:
+      - error
+      type: object
+    BalanceResponse:
+      properties:
+        currency:
+          description: API credit currency.
+          type: string
+        object:
+          enum:
+          - balance
+          type: string
+        remaining_credits:
+          description: Remaining TextCortex API credits.
+          type: number
+      required:
+      - object
+      - remaining_credits
+      - currency
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: API key
+      description: 'Send `Authorization: Bearer <api_key>`.'
+      scheme: bearer
+      type: http

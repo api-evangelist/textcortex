@@ -1,0 +1,233 @@
+openapi: 3.0.2
+info:
+  description: OpenAI-compatible TextCortex API for model discovery, chat completions, and responses.
+  title: TextCortex Balance Responses API
+  version: 1.2026.07.20
+servers:
+- description: Production server
+  url: https://api.textcortex.com/v1
+security:
+- BearerAuth: []
+tags:
+- description: Generate responses with TextCortex models.
+  name: Responses
+paths:
+  /responses:
+    post:
+      description: Creates a response using an OpenAI-compatible request body. Use model ids returned by `GET /models`.
+      operationId: createResponse
+      requestBody:
+        content:
+          application/json:
+            examples:
+              basic:
+                summary: Basic response
+                value:
+                  input: Write a short product tagline.
+                  max_output_tokens: 128
+                  model: kimi-k2-5
+                  store: false
+              streaming:
+                summary: Streaming response
+                value:
+                  input: Explain API credits in one paragraph.
+                  model: kimi-k2-5
+                  store: false
+                  stream: true
+            schema:
+              $ref: '#/components/schemas/ResponseRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseResponse'
+            text/event-stream:
+              schema:
+                description: Server-sent event stream containing response events.
+                type: string
+          description: Response object
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAIError'
+          description: Invalid request body
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAIError'
+          description: Missing or invalid API key
+        '402':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAIError'
+          description: Insufficient API credits
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAIError'
+          description: Unknown model
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAIError'
+          description: Response creation failed
+      summary: Create a response
+      tags:
+      - Responses
+components:
+  schemas:
+    ResponseRequest:
+      additionalProperties: false
+      properties:
+        input:
+          oneOf:
+          - type: string
+          - items:
+              oneOf:
+              - type: string
+              - $ref: '#/components/schemas/ResponseInputMessage'
+            minItems: 1
+            type: array
+        instructions:
+          nullable: true
+          type: string
+        max_output_tokens:
+          minimum: 1
+          nullable: true
+          type: integer
+        model:
+          description: Model id returned by `GET /models`.
+          example: kimi-k2-5
+          type: string
+        store:
+          default: false
+          description: Set to false or omit. Stored responses are not supported by this endpoint.
+          enum:
+          - false
+          nullable: true
+          type: boolean
+        stream:
+          default: false
+          nullable: true
+          type: boolean
+        temperature:
+          maximum: 2
+          minimum: 0
+          nullable: true
+          type: number
+        top_p:
+          maximum: 1
+          minimum: 0
+          nullable: true
+          type: number
+      required:
+      - model
+      - input
+      type: object
+    ResponseUsage:
+      additionalProperties: true
+      properties:
+        input_tokens:
+          type: integer
+        input_tokens_details:
+          $ref: '#/components/schemas/InputTokensDetails'
+        output_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+      type: object
+    InputTokensDetails:
+      additionalProperties: true
+      properties:
+        cached_tokens:
+          description: Input tokens served from cache for this request.
+          type: integer
+      type: object
+    ResponseInputMessage:
+      additionalProperties: true
+      properties:
+        content:
+          oneOf:
+          - type: string
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+        role:
+          enum:
+          - system
+          - developer
+          - user
+          - assistant
+          type: string
+      required:
+      - role
+      - content
+      type: object
+    OpenAIError:
+      properties:
+        error:
+          properties:
+            code:
+              nullable: true
+              type: string
+            message:
+              type: string
+            param:
+              nullable: true
+              type: string
+            type:
+              enum:
+              - invalid_request_error
+              - server_error
+              type: string
+          required:
+          - message
+          - type
+          type: object
+      required:
+      - error
+      type: object
+    ResponseResponse:
+      additionalProperties: true
+      properties:
+        created_at:
+          type: integer
+        id:
+          type: string
+        model:
+          type: string
+        object:
+          enum:
+          - response
+          type: string
+        output:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        status:
+          type: string
+        usage:
+          $ref: '#/components/schemas/ResponseUsage'
+      required:
+      - id
+      - object
+      - created_at
+      - model
+      - status
+      - output
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: API key
+      description: 'Send `Authorization: Bearer <api_key>`.'
+      scheme: bearer
+      type: http

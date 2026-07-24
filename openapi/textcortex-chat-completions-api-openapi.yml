@@ -1,0 +1,374 @@
+openapi: 3.0.2
+info:
+  description: OpenAI-compatible TextCortex API for model discovery, chat completions, and responses.
+  title: TextCortex Balance Chat Completions API
+  version: 1.2026.07.20
+servers:
+- description: Production server
+  url: https://api.textcortex.com/v1
+security:
+- BearerAuth: []
+tags:
+- description: Generate chat completions with TextCortex models.
+  name: Chat Completions
+paths:
+  /chat/completions:
+    post:
+      description: Creates a chat completion using an OpenAI-compatible request body. Use model ids returned by `GET /models`.
+      operationId: createChatCompletion
+      requestBody:
+        content:
+          application/json:
+            examples:
+              basic:
+                summary: Basic chat completion
+                value:
+                  max_tokens: 128
+                  messages:
+                  - content: Write a short product tagline.
+                    role: user
+                  model: kimi-k2-5
+              streaming:
+                summary: Streaming chat completion
+                value:
+                  messages:
+                  - content: Explain API credits in one paragraph.
+                    role: user
+                  model: kimi-k2-5
+                  stream: true
+            schema:
+              $ref: '#/components/schemas/ChatCompletionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatCompletionResponse'
+            text/event-stream:
+              schema:
+                description: Server-sent event stream containing chat completion chunks.
+                type: string
+          description: Chat completion response
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAIError'
+          description: Invalid request body
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAIError'
+          description: Missing or invalid API key
+        '402':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAIError'
+          description: Insufficient API credits
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAIError'
+          description: Unknown model
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAIError'
+          description: Chat completion failed
+      summary: Create a chat completion
+      tags:
+      - Chat Completions
+components:
+  schemas:
+    ChatCompletionChoice:
+      additionalProperties: true
+      properties:
+        finish_reason:
+          nullable: true
+          type: string
+        index:
+          type: integer
+        message:
+          $ref: '#/components/schemas/ChatMessage'
+      type: object
+    ChatCompletionUsage:
+      additionalProperties: true
+      properties:
+        completion_tokens:
+          type: integer
+        prompt_tokens:
+          type: integer
+        prompt_tokens_details:
+          $ref: '#/components/schemas/PromptTokensDetails'
+        total_tokens:
+          type: integer
+      type: object
+    ChatCompletionResponse:
+      additionalProperties: true
+      properties:
+        choices:
+          items:
+            $ref: '#/components/schemas/ChatCompletionChoice'
+          type: array
+        created:
+          type: integer
+        id:
+          type: string
+        model:
+          type: string
+        object:
+          type: string
+        usage:
+          $ref: '#/components/schemas/ChatCompletionUsage'
+      required:
+      - id
+      - object
+      - created
+      - model
+      - choices
+      type: object
+    ChatCompletionRequest:
+      additionalProperties: false
+      properties:
+        audio:
+          additionalProperties: true
+          nullable: true
+          type: object
+        frequency_penalty:
+          maximum: 2
+          minimum: -2
+          nullable: true
+          type: number
+        function_call:
+          nullable: true
+          oneOf:
+          - type: string
+          - type: object
+        functions:
+          items:
+            type: object
+          nullable: true
+          type: array
+        logit_bias:
+          additionalProperties:
+            type: number
+          nullable: true
+          type: object
+        logprobs:
+          nullable: true
+          type: boolean
+        max_completion_tokens:
+          minimum: 1
+          nullable: true
+          type: integer
+        max_tokens:
+          minimum: 1
+          nullable: true
+          type: integer
+        messages:
+          items:
+            $ref: '#/components/schemas/ChatMessage'
+          minItems: 1
+          type: array
+        metadata:
+          additionalProperties: true
+          nullable: true
+          type: object
+        modalities:
+          items:
+            type: string
+          nullable: true
+          type: array
+        model:
+          description: Model id returned by `GET /models`.
+          example: kimi-k2-5
+          type: string
+        n:
+          minimum: 1
+          nullable: true
+          type: integer
+        parallel_tool_calls:
+          nullable: true
+          type: boolean
+        prediction:
+          additionalProperties: true
+          nullable: true
+          type: object
+        presence_penalty:
+          maximum: 2
+          minimum: -2
+          nullable: true
+          type: number
+        prompt_cache_key:
+          nullable: true
+          type: string
+        prompt_cache_retention:
+          nullable: true
+          type: string
+        reasoning:
+          nullable: true
+          type: object
+        reasoning_effort:
+          nullable: true
+          type: string
+        response_format:
+          nullable: true
+          type: object
+        safety_identifier:
+          nullable: true
+          type: string
+        seed:
+          nullable: true
+          type: integer
+        service_tier:
+          nullable: true
+          type: string
+        stop:
+          nullable: true
+          oneOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+        store:
+          nullable: true
+          type: boolean
+        stream:
+          default: false
+          nullable: true
+          type: boolean
+        stream_options:
+          additionalProperties: true
+          nullable: true
+          properties:
+            include_usage:
+              type: boolean
+          type: object
+        temperature:
+          maximum: 2
+          minimum: 0
+          nullable: true
+          type: number
+        tool_choice:
+          nullable: true
+          oneOf:
+          - type: string
+          - type: object
+        tools:
+          items:
+            type: object
+          nullable: true
+          type: array
+        top_logprobs:
+          minimum: 0
+          nullable: true
+          type: integer
+        top_p:
+          maximum: 1
+          minimum: 0
+          nullable: true
+          type: number
+        user:
+          nullable: true
+          type: string
+        verbosity:
+          nullable: true
+          type: string
+        web_search_options:
+          additionalProperties: true
+          nullable: true
+          type: object
+      required:
+      - model
+      - messages
+      type: object
+    OpenAIError:
+      properties:
+        error:
+          properties:
+            code:
+              nullable: true
+              type: string
+            message:
+              type: string
+            param:
+              nullable: true
+              type: string
+            type:
+              enum:
+              - invalid_request_error
+              - server_error
+              type: string
+          required:
+          - message
+          - type
+          type: object
+      required:
+      - error
+      type: object
+    ChatMessageContentPart:
+      additionalProperties: true
+      properties:
+        image_url:
+          properties:
+            url:
+              type: string
+          type: object
+        text:
+          type: string
+        type:
+          description: Content part type.
+          example: text
+          type: string
+      required:
+      - type
+      type: object
+    ChatMessage:
+      additionalProperties: true
+      properties:
+        content:
+          nullable: true
+          oneOf:
+          - nullable: true
+            type: string
+          - items:
+              $ref: '#/components/schemas/ChatMessageContentPart'
+            type: array
+        name:
+          type: string
+        role:
+          enum:
+          - system
+          - user
+          - assistant
+          - tool
+          type: string
+        tool_call_id:
+          type: string
+        tool_calls:
+          items:
+            additionalProperties: true
+            type: object
+          nullable: true
+          type: array
+      required:
+      - role
+      type: object
+    PromptTokensDetails:
+      additionalProperties: true
+      properties:
+        cached_tokens:
+          description: Prompt tokens served from cache for this request.
+          type: integer
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: API key
+      description: 'Send `Authorization: Bearer <api_key>`.'
+      scheme: bearer
+      type: http

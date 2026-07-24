@@ -1,0 +1,159 @@
+openapi: 3.0.2
+info:
+  description: OpenAI-compatible TextCortex API for model discovery, chat completions, and responses.
+  title: TextCortex Balance Models API
+  version: 1.2026.07.20
+servers:
+- description: Production server
+  url: https://api.textcortex.com/v1
+security:
+- BearerAuth: []
+tags:
+- description: Discover OpenAI-compatible TextCortex models.
+  name: Models
+paths:
+  /models:
+    get:
+      description: Returns the TextCortex models available through the OpenAI-compatible public API.
+      operationId: listModels
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListModelsResponse'
+          description: Successful response
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAIError'
+          description: Missing or invalid API key
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAIError'
+          description: Model catalog could not be listed
+      summary: List models
+      tags:
+      - Models
+  /models/{model_id}:
+    get:
+      description: Returns metadata for one TextCortex model available through the OpenAI-compatible public API.
+      operationId: retrieveModel
+      parameters:
+      - description: TextCortex model id.
+        in: path
+        name: model_id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelDetail'
+          description: Successful response
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAIError'
+          description: Missing or invalid API key
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAIError'
+          description: Unknown model
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAIError'
+          description: Model could not be retrieved
+      summary: Retrieve a model
+      tags:
+      - Models
+components:
+  schemas:
+    Model:
+      properties:
+        created:
+          description: Unix timestamp for the model release date.
+          type: integer
+        id:
+          description: TextCortex model id.
+          example: kimi-k2-5
+          type: string
+        object:
+          enum:
+          - model
+          type: string
+        owned_by:
+          example: textcortex
+          type: string
+      required:
+      - id
+      - object
+      - created
+      - owned_by
+      type: object
+    OpenAIError:
+      properties:
+        error:
+          properties:
+            code:
+              nullable: true
+              type: string
+            message:
+              type: string
+            param:
+              nullable: true
+              type: string
+            type:
+              enum:
+              - invalid_request_error
+              - server_error
+              type: string
+          required:
+          - message
+          - type
+          type: object
+      required:
+      - error
+      type: object
+    ModelDetail:
+      allOf:
+      - $ref: '#/components/schemas/Model'
+      - properties:
+          served_from_country_code:
+            description: ISO 3166-1 alpha-2 country code for the model deployment advertised by TextCortex. Europe-hosted metadata is used only when the model has an explicit Europe override.
+            nullable: true
+            type: string
+        required:
+        - served_from_country_code
+        type: object
+    ListModelsResponse:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Model'
+          type: array
+        object:
+          enum:
+          - list
+          type: string
+      required:
+      - object
+      - data
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: API key
+      description: 'Send `Authorization: Bearer <api_key>`.'
+      scheme: bearer
+      type: http
