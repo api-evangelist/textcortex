@@ -1,0 +1,33 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/textcortex-openapi.json + well-known/textcortex-openid-configuration.json
+standards:
+- id: openai-compatible
+  conforms: true
+  evidence: >-
+    /chat/completions and /responses accept OpenAI-compatible request bodies; /models
+    and /models/{id} mirror the OpenAI model-discovery contract; error object matches
+    the OpenAI error envelope.
+- id: oauth2
+  conforms: true
+  evidence: >-
+    OIDC/OAuth2 authorization-code + refresh flows advertised for account login at
+    api.textcortex.com/.well-known/openid-configuration (PKCE S256). Applies to
+    dashboard login, not the REST API (which is Bearer API-key).
+- id: oidc
+  conforms: true
+  evidence: well-known/textcortex-openid-configuration.json (issuer, jwks, userinfo, scopes openid/email/profile)
+- id: pkce
+  conforms: true
+  evidence: code_challenge_methods_supported=[S256] in openid-configuration
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: errors use the OpenAI-style {error:{message,type,code,param}} object, not application/problem+json
+- id: sse-streaming
+  conforms: true
+  evidence: text/event-stream responses on createChatCompletion and createResponse when stream=true
+- id: gdpr
+  conforms: true
+  evidence: >-
+    TextCortex advertises EU-only, GDPR-compliant hosting; models expose
+    served_from_country_code with Europe overrides. (Marketing/legal claim, not an audited certification.)

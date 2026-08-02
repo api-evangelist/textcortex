@@ -1,22 +1,167 @@
 aid: textcortex
 name: Textcortex
-description: Textcortex is a company surfaced as a portfolio company of speedinvest and added to the API
-  Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  TextCortex is a Berlin-based AI writing and content-generation platform (ZenoChat
+  assistant, knowledge bases, and a suite of writing tools) that also ships a public,
+  OpenAI-compatible REST API. The API, served from https://api.textcortex.com/v1 with
+  Bearer API-key authentication, exposes model discovery, chat completions, and an
+  OpenAI Responses-compatible generation endpoint, plus an API-credit balance check.
+  Streaming is supported over server-sent events and infrastructure is EU-hosted and
+  GDPR-compliant. TextCortex is backed by Speedinvest and maintains first-party Python
+  and JavaScript client libraries.
 url: https://raw.githubusercontent.com/api-evangelist/textcortex/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://docs.textcortex.com/logo192.png
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - speedinvest
-x-tier: stub
-x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
-apis: []
+- Artificial Intelligence
+- Text Generation
+- Large Language Models
+- Chat Completions
+- OpenAI-Compatible
+- Content Generation
+- Developer Tools
+apis:
+- aid: textcortex:textcortex-balance-api
+  name: Textcortex Balance API
+  description: Read API credit balance for the current API key.
+  humanURL: https://docs.textcortex.com/
+  baseURL: https://api.textcortex.com/v1
+  tags:
+  - Balance
+  properties:
+  - type: OpenAPI
+    url: openapi/textcortex-balance-api-openapi.yml
+  - type: Documentation
+    url: https://docs.textcortex.com/
+  - type: APIReference
+    url: https://docs.textcortex.com/
+  - type: GettingStarted
+    url: >-
+      https://help.textcortex.com/hc/en-us/articles/25546707607185-TextCortex-API-Deploy-AI-on-your-platform
+- aid: textcortex:textcortex-chat-completions-api
+  name: Textcortex Chat Completions API
+  description: Generate chat completions with TextCortex models.
+  humanURL: https://docs.textcortex.com/
+  baseURL: https://api.textcortex.com/v1
+  tags:
+  - Chat Completions
+  properties:
+  - type: OpenAPI
+    url: openapi/textcortex-chat-completions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.textcortex.com/
+  - type: APIReference
+    url: https://docs.textcortex.com/
+  - type: GettingStarted
+    url: >-
+      https://help.textcortex.com/hc/en-us/articles/25546707607185-TextCortex-API-Deploy-AI-on-your-platform
+- aid: textcortex:textcortex-models-api
+  name: Textcortex Models API
+  description: Discover OpenAI-compatible TextCortex models.
+  humanURL: https://docs.textcortex.com/
+  baseURL: https://api.textcortex.com/v1
+  tags:
+  - Models
+  properties:
+  - type: OpenAPI
+    url: openapi/textcortex-models-api-openapi.yml
+  - type: Documentation
+    url: https://docs.textcortex.com/
+  - type: APIReference
+    url: https://docs.textcortex.com/
+  - type: GettingStarted
+    url: >-
+      https://help.textcortex.com/hc/en-us/articles/25546707607185-TextCortex-API-Deploy-AI-on-your-platform
+- aid: textcortex:textcortex-responses-api
+  name: Textcortex Responses API
+  description: Generate responses with TextCortex models.
+  humanURL: https://docs.textcortex.com/
+  baseURL: https://api.textcortex.com/v1
+  tags:
+  - Responses
+  properties:
+  - type: OpenAPI
+    url: openapi/textcortex-responses-api-openapi.yml
+  - type: Documentation
+    url: https://docs.textcortex.com/
+  - type: APIReference
+    url: https://docs.textcortex.com/
+  - type: GettingStarted
+    url: >-
+      https://help.textcortex.com/hc/en-us/articles/25546707607185-TextCortex-API-Deploy-AI-on-your-platform
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+common:
+- type: DomainSecurity
+  url: security/textcortex-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/textcortex-agentic-access.yml
+- type: Authentication
+  url: authentication/textcortex-authentication.yml
+- type: Packages
+  url: packages/textcortex-packages.yml
+- type: SDKs
+  url: packages/textcortex-packages.yml
+- type: WellKnown
+  url: well-known/textcortex-well-known.yml
+- type: MCPServer
+  url: mcp/textcortex-mcp.yml
+- type: LLMsTxt
+  url: llms/textcortex-llms.txt
+- type: Overlay
+  url: overlays/textcortex-openapi-overlay.yaml
+- type: Conformance
+  url: conformance/textcortex-conformance.yml
+- type: ErrorCatalog
+  url: errors/textcortex-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/textcortex-lifecycle.yml
+- type: StatusPage
+  url: https://status.textcortex.com/
+- type: Conventions
+  url: conventions/textcortex-conventions.yml
+- type: DataModel
+  url: data-model/textcortex-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DeveloperPortal
+  url: https://docs.textcortex.com/
+- type: Support
+  url: https://help.textcortex.com/
+- type: GitHubOrganization
+  url: https://github.com/textcortex
+- type: Pricing
+  url: https://textcortex.com/pricing
+- type: TermsOfService
+  url: https://textcortex.com/terms-of-services
+- type: SignUp
+  url: https://app.textcortex.com/
+- type: Postman
+  url: https://www.postman.com/textcortex/textcortex-text-generation-api/overview
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 18
+  pass: local-v1

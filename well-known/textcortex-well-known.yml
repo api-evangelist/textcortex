@@ -1,0 +1,25 @@
+generated: '2026-07-21'
+method: searched
+source: probe of TextCortex hosts
+hosts:
+- host: https://api.textcortex.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: textcortex-openid-configuration.json
+    note: OIDC discovery for the TextCortex account/dashboard login (scopes openid/email/profile);
+      the public REST API itself uses Bearer API-key auth, not this OIDC flow.
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+- host: https://textcortex.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404

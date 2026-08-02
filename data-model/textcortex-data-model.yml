@@ -1,0 +1,48 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/textcortex-openapi.json
+entities:
+- name: Model
+  object: model
+  id_field: id
+  id_example: kimi-k2-5
+  fields: [id, object, created, owned_by, served_from_country_code]
+  operations: [listModels, retrieveModel]
+- name: ChatCompletion
+  object: chat.completion
+  fields: [id, object, created, model, choices, usage]
+  operations: [createChatCompletion]
+- name: Response
+  object: response
+  id_field: id
+  fields: [id, object, created_at, model, status, output, usage]
+  operations: [createResponse]
+- name: Balance
+  object: balance
+  fields: [object, remaining_credits, currency]
+  operations: [retrieveBalance]
+relationships:
+- from: ChatCompletion
+  to: Model
+  type: belongs_to
+  via: model
+- from: Response
+  to: Model
+  type: belongs_to
+  via: model
+- from: ChatCompletion
+  to: ChatCompletionUsage
+  type: has_one
+  via: usage
+- from: Response
+  to: ResponseUsage
+  type: has_one
+  via: usage
+- from: ChatCompletion
+  to: ChatCompletionChoice
+  type: has_many
+  via: choices
+notes: >-
+  Stateless generation API. Responses are not stored (store must be false on
+  /responses), so there are no persistent cross-entity references beyond the model id
+  a completion/response is generated with.

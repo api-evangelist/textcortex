@@ -1,0 +1,20 @@
+{
+  "provider": "textcortex",
+  "sources": [
+    "textcortex-balance-api-openapi.yml",
+    "textcortex-chat-completions-api-openapi.yml",
+    "textcortex-models-api-openapi.yml",
+    "textcortex-responses-api-openapi.yml"
+  ],
+  "outputs": [
+    "textcortex-balance-api-openapi.yml",
+    "textcortex-chat-completions-api-openapi.yml",
+    "textcortex-models-api-openapi.yml",
+    "textcortex-responses-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

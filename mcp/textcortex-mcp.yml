@@ -1,0 +1,29 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/textcortex-openapi.json
+notes: >-
+  No official hosted/remote TextCortex MCP server was found (the org's Spritz project is
+  a Kubernetes control plane for AI agents, not an MCP server for this API). Because the
+  API is OpenAI-compatible, an MCP wrapper is straightforward. The tools below are a
+  candidate mapping derived one-per-operation from the OpenAPI.
+server:
+  name: textcortex
+  transport: http
+  url: null
+tools:
+- name: retrieve_balance
+  description: Retrieve remaining API credit balance for the current API key.
+  source_operation: openapi/textcortex-openapi.json#retrieveBalance
+- name: create_chat_completion
+  description: Create an OpenAI-compatible chat completion with a TextCortex model.
+  source_operation: openapi/textcortex-openapi.json#createChatCompletion
+- name: list_models
+  description: List OpenAI-compatible TextCortex models.
+  source_operation: openapi/textcortex-openapi.json#listModels
+- name: retrieve_model
+  description: Retrieve metadata for one TextCortex model.
+  source_operation: openapi/textcortex-openapi.json#retrieveModel
+- name: create_response
+  description: Create an OpenAI-compatible response with a TextCortex model.
+  source_operation: openapi/textcortex-openapi.json#createResponse

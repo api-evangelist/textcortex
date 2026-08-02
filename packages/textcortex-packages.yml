@@ -1,0 +1,25 @@
+generated: '2026-07-21'
+method: searched
+source: PyPI, npm, GitHub org github.com/textcortex
+notes: >-
+  TextCortex publishes first-party HemingwAI client libraries (Python + JavaScript).
+  These wrap the original HemingwAI generation endpoints. The current public REST API
+  (api.textcortex.com/v1) is OpenAI-compatible, so it can additionally be consumed with
+  any standard OpenAI SDK by overriding the base_url to https://api.textcortex.com/v1 --
+  those OpenAI SDKs are third-party and are not listed as official below.
+packages:
+- language: python
+  registry: pypi
+  name: textcortex
+  url: https://pypi.org/project/textcortex/
+  install: pip install textcortex
+  repository: https://github.com/textcortex/hemingwai
+  official: true
+  note: HemingwAI Python SDK. Latest published 2.0.3.
+- language: javascript
+  registry: github
+  name: textcortex-hemingwai-js
+  url: https://github.com/textcortex/textcortex-hemingwai-js
+  install: git clone https://github.com/textcortex/textcortex-hemingwai-js
+  official: true
+  note: HemingwAI JavaScript client (published to the GitHub org, not npm).

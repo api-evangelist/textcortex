@@ -1,0 +1,12 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/textcortex-openapi.json
+skills:
+- file: textcortex-generate-chat-completion.md
+  name: Generate a chat completion with TextCortex
+  api: openapi/textcortex-openapi.json
+  operations: [listModels, retrieveBalance, createChatCompletion]
+- file: textcortex-generate-response.md
+  name: Generate text with the TextCortex Responses API
+  api: openapi/textcortex-openapi.json
+  operations: [listModels, createResponse]

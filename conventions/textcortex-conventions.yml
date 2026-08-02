@@ -1,0 +1,48 @@
+generated: '2026-07-21'
+method: searched
+source: openapi/textcortex-openapi.json + docs.textcortex.com
+summary: >-
+  Cross-cutting request/response semantics for the OpenAI-compatible TextCortex API
+  (https://api.textcortex.com/v1). The surface mirrors the OpenAI Chat Completions and
+  Responses contracts, so OpenAI conventions apply.
+authentication:
+  style: http-bearer
+  header: 'Authorization: Bearer <api_key>'
+  ref: authentication/textcortex-authentication.yml
+error_envelope:
+  shape: openai-error
+  format: application/json
+  example_field_path: error.message
+  fields: [error.message, error.type, error.code, error.param]
+  types: [invalid_request_error, server_error]
+  note: OpenAI-style error object, not RFC 9457 problem+json.
+  ref: errors/textcortex-problem-types.yml
+streaming:
+  supported: true
+  mechanism: server-sent-events
+  content_type: text/event-stream
+  toggled_by: 'request field: stream=true'
+  operations: [createChatCompletion, createResponse]
+idempotency:
+  supported: false
+  note: No idempotency-key header or parameter is documented in the OpenAPI or docs.
+pagination:
+  supported: false
+  note: >-
+    GET /models returns an OpenAI-style {object:"list", data:[...]} envelope with no
+    cursor/offset paging parameters. No other collection endpoints.
+versioning:
+  scheme: uri-path + calendar-versioned info.version
+  current_path: /v1
+  spec_version: 1.2026.07.20
+  ref: lifecycle/textcortex-lifecycle.yml
+rate_limiting:
+  signal: undocumented
+  note: >-
+    No rate-limit response headers are declared in the OpenAPI. Usage is metered by API
+    credits; 402 "Insufficient API credits" is returned when the account balance is
+    exhausted (see GET /balance).
+data_residency:
+  note: >-
+    Models expose served_from_country_code; TextCortex advertises EU-hosted, GDPR-compliant
+    infrastructure with per-model Europe overrides.

@@ -1,0 +1,22 @@
+generated: '2026-07-21'
+method: searched
+source: openapi/textcortex-openapi.json + status.textcortex.com + docs.textcortex.com
+versioning:
+  scheme: uri-path
+  current: v1
+  spec_version: 1.2026.07.20
+  calendar_versioned: true
+  note: info.version is calendar-versioned (1.YYYY.MM.DD); the API path is pinned at /v1.
+deprecation:
+  policy_url: null
+  sunset_header: unknown
+  note: No formal deprecation/sunset policy located in the public docs.
+sla:
+  url: null
+  uptime_target: null
+status_page: https://status.textcortex.com/
+status_page_note: >-
+  status.textcortex.com resolves (Cloudflare-fronted); the org also maintains a
+  cortex-status project at github.com/textcortex/cortex-status. Page content was not
+  machine-readable at probe time.
+deprecated_operations: []

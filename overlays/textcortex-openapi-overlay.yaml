@@ -1,0 +1,29 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for TextCortex API
+  version: 1.0.0
+extends: openapi/textcortex-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-21'
+    x-api-style: openai-compatible
+    x-error-envelope: openai-error
+    x-streaming: server-sent-events
+    contact:
+      name: TextCortex
+      url: https://docs.textcortex.com/
+- target: $.info
+  update:
+    x-well-known:
+      openid-configuration: https://api.textcortex.com/.well-known/openid-configuration
+- target: $.paths['/chat/completions'].post
+  update:
+    x-agent-notes: >-
+      OpenAI-compatible chat completion. Set stream=true for a text/event-stream response.
+      402 indicates the account is out of API credits (check GET /balance first).
+- target: $.paths['/responses'].post
+  update:
+    x-agent-notes: >-
+      OpenAI Responses-compatible generation. store must be false or omitted; stored
+      responses are not supported by this endpoint.

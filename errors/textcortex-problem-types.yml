@@ -1,0 +1,54 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/textcortex-openapi.json
+format: openai-error
+envelope:
+  schema: OpenAIError
+  path: error
+  fields:
+    message: {type: string, required: true}
+    type: {type: string, required: true, enum: [invalid_request_error, server_error]}
+    code: {type: string, nullable: true}
+    param: {type: string, nullable: true}
+  note: OpenAI-style error object (not RFC 9457 application/problem+json).
+problems:
+- status: 400
+  title: Invalid request body
+  error_type: invalid_request_error
+  source_operations:
+  - openapi/textcortex-openapi.json#createChatCompletion
+  - openapi/textcortex-openapi.json#createResponse
+- status: 401
+  title: Missing or invalid API key
+  error_type: invalid_request_error
+  remediation: 'Send a valid API key as an Authorization Bearer token.'
+  source_operations:
+  - openapi/textcortex-openapi.json#retrieveBalance
+  - openapi/textcortex-openapi.json#createChatCompletion
+  - openapi/textcortex-openapi.json#listModels
+  - openapi/textcortex-openapi.json#retrieveModel
+  - openapi/textcortex-openapi.json#createResponse
+- status: 402
+  title: Insufficient API credits
+  error_type: invalid_request_error
+  remediation: Top up API credits; check remaining balance via GET /balance.
+  source_operations:
+  - openapi/textcortex-openapi.json#createChatCompletion
+  - openapi/textcortex-openapi.json#createResponse
+- status: 404
+  title: Unknown model
+  error_type: invalid_request_error
+  remediation: Use a model id returned by GET /models.
+  source_operations:
+  - openapi/textcortex-openapi.json#createChatCompletion
+  - openapi/textcortex-openapi.json#retrieveModel
+  - openapi/textcortex-openapi.json#createResponse
+- status: 500
+  title: Server error
+  error_type: server_error
+  source_operations:
+  - openapi/textcortex-openapi.json#retrieveBalance
+  - openapi/textcortex-openapi.json#createChatCompletion
+  - openapi/textcortex-openapi.json#listModels
+  - openapi/textcortex-openapi.json#retrieveModel
+  - openapi/textcortex-openapi.json#createResponse
