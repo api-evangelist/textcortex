@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TextCortex Balance Responses API",
+    "version": "1.2026.07.20"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Responses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a response",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.textcortex.com/v1/responses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a response using an OpenAI-compatible request body. Use model ids returned by `GET /models`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

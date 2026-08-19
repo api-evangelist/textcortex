@@ -2,11 +2,10 @@ generated: '2026-07-21'
 method: derived
 status: candidate
 source: openapi/textcortex-openapi.json
-notes: >-
-  No official hosted/remote TextCortex MCP server was found (the org's Spritz project is
-  a Kubernetes control plane for AI agents, not an MCP server for this API). Because the
-  API is OpenAI-compatible, an MCP wrapper is straightforward. The tools below are a
-  candidate mapping derived one-per-operation from the OpenAPI.
+notes: No official hosted/remote TextCortex MCP server was found (the org's Spritz project is a Kubernetes
+  control plane for AI agents, not an MCP server for this API). Because the API is OpenAI-compatible,
+  an MCP wrapper is straightforward. The tools below are a candidate mapping derived one-per-operation
+  from the OpenAPI.
 server:
   name: textcortex
   transport: http
@@ -27,3 +26,9 @@ tools:
 - name: create_response
   description: Create an OpenAI-compatible response with a TextCortex model.
   source_operation: openapi/textcortex-openapi.json#createResponse
+deployment:
+  mode: none
+  verified: derived
+  tools: 5
+  checked: '2026-08-12'
+  source: catalog MCP census

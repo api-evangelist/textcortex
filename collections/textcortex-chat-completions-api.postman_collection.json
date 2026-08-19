@@ -1,0 +1,402 @@
+{
+  "item": [
+    {
+      "id": "ac098c04-b592-4342-818b-585f6cf31c46",
+      "name": "Chat Completions",
+      "description": {
+        "content": "Generate chat completions with TextCortex models.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "11627fec-311e-4cc7-a62b-2ec16c6661f6",
+          "name": "Create a chat completion",
+          "request": {
+            "name": "Create a chat completion",
+            "description": {
+              "content": "Creates a chat completion using an OpenAI-compatible request body. Use model ids returned by `GET /models`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "chat",
+                "completions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\",\n      \"name\": \"<string>\",\n      \"tool_call_id\": \"<string>\",\n      \"tool_calls\": [\n        {\n          \"key_0\": false\n        },\n        {\n          \"key_0\": 9681\n        }\n      ]\n    }\n  ],\n  \"audio\": {\n    \"key_0\": 4499.715753900029\n  },\n  \"frequency_penalty\": \"<number>\",\n  \"function_call\": \"<string>\",\n  \"functions\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"logit_bias\": {\n    \"key_0\": \"<number>\",\n    \"key_1\": \"<number>\"\n  },\n  \"logprobs\": \"<boolean>\",\n  \"max_completion_tokens\": \"<integer>\",\n  \"max_tokens\": \"<integer>\",\n  \"metadata\": {\n    \"key_0\": false,\n    \"key_1\": \"string\"\n  },\n  \"modalities\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"n\": \"<integer>\",\n  \"parallel_tool_calls\": \"<boolean>\",\n  \"prediction\": {\n    \"key_0\": 3958,\n    \"key_1\": \"string\",\n    \"key_2\": 1925.2775631630425,\n    \"key_3\": 2362\n  },\n  \"presence_penalty\": \"<number>\",\n  \"prompt_cache_key\": \"<string>\",\n  \"prompt_cache_retention\": \"<string>\",\n  \"reasoning\": \"<object>\",\n  \"reasoning_effort\": \"<string>\",\n  \"response_format\": \"<object>\",\n  \"safety_identifier\": \"<string>\",\n  \"seed\": \"<integer>\",\n  \"service_tier\": \"<string>\",\n  \"stop\": \"<string>\",\n  \"store\": \"<boolean>\",\n  \"stream\": false,\n  \"stream_options\": {\n    \"include_usage\": \"<boolean>\",\n    \"key_0\": \"string\",\n    \"key_1\": true\n  },\n  \"temperature\": \"<number>\",\n  \"tool_choice\": \"<string>\",\n  \"tools\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"top_logprobs\": \"<integer>\",\n  \"top_p\": \"<number>\",\n  \"user\": \"<string>\",\n  \"verbosity\": \"<string>\",\n  \"web_search_options\": {\n    \"key_0\": 682.7544267193131\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1a71486c-2c22-41ff-88a0-2af00adb163d",
+              "name": "Chat completion response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"max_tokens\": 128,\n  \"messages\": [\n    {\n      \"content\": \"Write a short product tagline.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"model\": \"kimi-k2-5\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"string\",\n  \"created\": 5876,\n  \"model\": \"string\",\n  \"choices\": [\n    {\n      \"finish_reason\": \"string\",\n      \"index\": 2092,\n      \"message\": {\n        \"role\": \"<string>\",\n        \"content\": \"<string>\",\n        \"name\": \"<string>\",\n        \"tool_call_id\": \"<string>\",\n        \"tool_calls\": [\n          {\n            \"key_0\": 7513.503820518167,\n            \"key_1\": \"string\"\n          },\n          {\n            \"key_0\": false,\n            \"key_1\": true\n          }\n        ]\n      },\n      \"key_0\": true,\n      \"key_1\": 120\n    },\n    {\n      \"finish_reason\": \"string\",\n      \"index\": 7697,\n      \"message\": {\n        \"role\": \"<string>\",\n        \"content\": \"<string>\",\n        \"name\": \"<string>\",\n        \"tool_call_id\": \"<string>\",\n        \"tool_calls\": [\n          {\n            \"key_0\": true,\n            \"key_1\": \"string\"\n          },\n          {\n            \"key_0\": 20,\n            \"key_1\": \"string\"\n          }\n        ]\n      }\n    }\n  ],\n  \"usage\": {\n    \"completion_tokens\": 2570,\n    \"prompt_tokens\": 4101,\n    \"prompt_tokens_details\": {\n      \"cached_tokens\": 1370,\n      \"key_0\": \"string\"\n    },\n    \"total_tokens\": 9822\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec1f5a61-6483-4f34-9afb-c08dc9e84ddf",
+              "name": "Invalid request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"max_tokens\": 128,\n  \"messages\": [\n    {\n      \"content\": \"Write a short product tagline.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"model\": \"kimi-k2-5\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"server_error\",\n    \"code\": \"string\",\n    \"param\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "173462d7-2378-46f7-b254-ea61c3bd0b66",
+              "name": "Missing or invalid API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"max_tokens\": 128,\n  \"messages\": [\n    {\n      \"content\": \"Write a short product tagline.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"model\": \"kimi-k2-5\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"server_error\",\n    \"code\": \"string\",\n    \"param\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "74df6753-d086-4d28-8c37-19ed128c3f49",
+              "name": "Insufficient API credits",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"max_tokens\": 128,\n  \"messages\": [\n    {\n      \"content\": \"Write a short product tagline.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"model\": \"kimi-k2-5\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"server_error\",\n    \"code\": \"string\",\n    \"param\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf6b3349-e839-43e9-89f6-976301e0358d",
+              "name": "Unknown model",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"max_tokens\": 128,\n  \"messages\": [\n    {\n      \"content\": \"Write a short product tagline.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"model\": \"kimi-k2-5\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"server_error\",\n    \"code\": \"string\",\n    \"param\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "514c5f71-3dd1-4e14-a6f2-f879f1a2bc6f",
+              "name": "Chat completion failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"max_tokens\": 128,\n  \"messages\": [\n    {\n      \"content\": \"Write a short product tagline.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"model\": \"kimi-k2-5\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"string\",\n    \"type\": \"server_error\",\n    \"code\": \"string\",\n    \"param\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.textcortex.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6671d7e9-7bc4-4656-8b8b-c1e98ae3b866",
+    "name": "TextCortex Balance Chat Completions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAI-compatible TextCortex API for model discovery, chat completions, and responses.",
+      "type": "text/plain"
+    }
+  }
+}

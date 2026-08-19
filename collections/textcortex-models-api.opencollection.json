@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TextCortex Balance Models API",
+    "version": "1.2026.07.20"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Models",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.textcortex.com/v1/models"
+          },
+          "docs": "Returns the TextCortex models available through the OpenAI-compatible public API."
+        },
+        {
+          "info": {
+            "name": "Retrieve a model",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.textcortex.com/v1/models/:model_id",
+            "params": [
+              {
+                "name": "model_id",
+                "value": "",
+                "type": "path",
+                "description": "TextCortex model id."
+              }
+            ]
+          },
+          "docs": "Returns metadata for one TextCortex model available through the OpenAI-compatible public API."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

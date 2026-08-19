@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TextCortex Balance API",
+    "version": "1.2026.07.20"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Balance",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve API credit balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.textcortex.com/v1/balance"
+          },
+          "docs": "Returns the remaining API credit balance for the authenticated TextCortex API key."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
