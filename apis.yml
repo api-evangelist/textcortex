@@ -46,6 +46,8 @@ apis:
   humanURL: https://docs.textcortex.com/
   baseURL: https://api.textcortex.com/v1
   tags:
+  - Balances
+  tags_raw:
   - Balance
   properties:
   - type: OpenAPI
