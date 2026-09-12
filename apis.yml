@@ -129,6 +129,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Website
+  url: https://www.textcortex.com/
 - type: DomainSecurity
   url: security/textcortex-domain-security.yml
 - type: AgenticAccess
