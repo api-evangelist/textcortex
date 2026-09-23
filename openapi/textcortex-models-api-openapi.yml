@@ -1,7 +1,7 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
   description: OpenAI-compatible TextCortex API for model discovery, chat completions, and responses.
-  title: TextCortex Balance Models API
+  title: TextCortex Models API
   version: 1.2026.07.20
 servers:
 - description: Production server
@@ -80,6 +80,32 @@ paths:
       - Models
 components:
   schemas:
+    ModelDetail:
+      allOf:
+      - $ref: '#/components/schemas/Model'
+      - properties:
+          served_from_country_code:
+            description: ISO 3166-1 alpha-2 country code for the model deployment advertised by TextCortex. Europe-hosted metadata is used only when the model has an explicit Europe override.
+            type:
+            - string
+            - 'null'
+        required:
+        - served_from_country_code
+        type: object
+    ListModelsResponse:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Model'
+          type: array
+        object:
+          enum:
+          - list
+          type: string
+      required:
+      - object
+      - data
+      type: object
     Model:
       properties:
         created:
@@ -107,13 +133,15 @@ components:
         error:
           properties:
             code:
-              nullable: true
-              type: string
+              type:
+              - string
+              - 'null'
             message:
               type: string
             param:
-              nullable: true
-              type: string
+              type:
+              - string
+              - 'null'
             type:
               enum:
               - invalid_request_error
@@ -125,31 +153,6 @@ components:
           type: object
       required:
       - error
-      type: object
-    ModelDetail:
-      allOf:
-      - $ref: '#/components/schemas/Model'
-      - properties:
-          served_from_country_code:
-            description: ISO 3166-1 alpha-2 country code for the model deployment advertised by TextCortex. Europe-hosted metadata is used only when the model has an explicit Europe override.
-            nullable: true
-            type: string
-        required:
-        - served_from_country_code
-        type: object
-    ListModelsResponse:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/Model'
-          type: array
-        object:
-          enum:
-          - list
-          type: string
-      required:
-      - object
-      - data
       type: object
   securitySchemes:
     BearerAuth:

@@ -1,7 +1,7 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
   description: OpenAI-compatible TextCortex API for model discovery, chat completions, and responses.
-  title: TextCortex Balance Chat Completions API
+  title: TextCortex Chat Completions API
   version: 1.2026.07.20
 servers:
 - description: Production server
@@ -89,8 +89,9 @@ components:
       additionalProperties: true
       properties:
         finish_reason:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         index:
           type: integer
         message:
@@ -108,197 +109,52 @@ components:
         total_tokens:
           type: integer
       type: object
-    ChatCompletionResponse:
+    ChatMessage:
       additionalProperties: true
       properties:
-        choices:
-          items:
-            $ref: '#/components/schemas/ChatCompletionChoice'
-          type: array
-        created:
-          type: integer
-        id:
-          type: string
-        model:
-          type: string
-        object:
-          type: string
-        usage:
-          $ref: '#/components/schemas/ChatCompletionUsage'
-      required:
-      - id
-      - object
-      - created
-      - model
-      - choices
-      type: object
-    ChatCompletionRequest:
-      additionalProperties: false
-      properties:
-        audio:
-          additionalProperties: true
-          nullable: true
-          type: object
-        frequency_penalty:
-          maximum: 2
-          minimum: -2
-          nullable: true
-          type: number
-        function_call:
-          nullable: true
+        content:
           oneOf:
-          - type: string
-          - type: object
-        functions:
-          items:
-            type: object
-          nullable: true
-          type: array
-        logit_bias:
-          additionalProperties:
-            type: number
-          nullable: true
-          type: object
-        logprobs:
-          nullable: true
-          type: boolean
-        max_completion_tokens:
-          minimum: 1
-          nullable: true
-          type: integer
-        max_tokens:
-          minimum: 1
-          nullable: true
-          type: integer
-        messages:
-          items:
-            $ref: '#/components/schemas/ChatMessage'
-          minItems: 1
-          type: array
-        metadata:
-          additionalProperties: true
-          nullable: true
-          type: object
-        modalities:
-          items:
-            type: string
-          nullable: true
-          type: array
-        model:
-          description: Model id returned by `GET /models`.
-          example: kimi-k2-5
-          type: string
-        n:
-          minimum: 1
-          nullable: true
-          type: integer
-        parallel_tool_calls:
-          nullable: true
-          type: boolean
-        prediction:
-          additionalProperties: true
-          nullable: true
-          type: object
-        presence_penalty:
-          maximum: 2
-          minimum: -2
-          nullable: true
-          type: number
-        prompt_cache_key:
-          nullable: true
-          type: string
-        prompt_cache_retention:
-          nullable: true
-          type: string
-        reasoning:
-          nullable: true
-          type: object
-        reasoning_effort:
-          nullable: true
-          type: string
-        response_format:
-          nullable: true
-          type: object
-        safety_identifier:
-          nullable: true
-          type: string
-        seed:
-          nullable: true
-          type: integer
-        service_tier:
-          nullable: true
-          type: string
-        stop:
-          nullable: true
-          oneOf:
-          - type: string
+          - type:
+            - string
+            - 'null'
           - items:
-              type: string
+              $ref: '#/components/schemas/ChatMessageContentPart'
             type: array
-        store:
-          nullable: true
-          type: boolean
-        stream:
-          default: false
-          nullable: true
-          type: boolean
-        stream_options:
-          additionalProperties: true
-          nullable: true
-          properties:
-            include_usage:
-              type: boolean
-          type: object
-        temperature:
-          maximum: 2
-          minimum: 0
-          nullable: true
-          type: number
-        tool_choice:
-          nullable: true
-          oneOf:
-          - type: string
-          - type: object
-        tools:
+        name:
+          type: string
+        role:
+          enum:
+          - system
+          - user
+          - assistant
+          - tool
+          type: string
+        tool_call_id:
+          type: string
+        tool_calls:
           items:
+            additionalProperties: true
             type: object
-          nullable: true
-          type: array
-        top_logprobs:
-          minimum: 0
-          nullable: true
-          type: integer
-        top_p:
-          maximum: 1
-          minimum: 0
-          nullable: true
-          type: number
-        user:
-          nullable: true
-          type: string
-        verbosity:
-          nullable: true
-          type: string
-        web_search_options:
-          additionalProperties: true
-          nullable: true
-          type: object
+          type:
+          - array
+          - 'null'
       required:
-      - model
-      - messages
+      - role
       type: object
     OpenAIError:
       properties:
         error:
           properties:
             code:
-              nullable: true
-              type: string
+              type:
+              - string
+              - 'null'
             message:
               type: string
             param:
-              nullable: true
-              type: string
+              type:
+              - string
+              - 'null'
             type:
               enum:
               - invalid_request_error
@@ -328,36 +184,188 @@ components:
       required:
       - type
       type: object
-    ChatMessage:
-      additionalProperties: true
+    ChatCompletionRequest:
+      additionalProperties: false
       properties:
-        content:
-          nullable: true
+        audio:
+          additionalProperties: true
+          type:
+          - object
+          - 'null'
+        frequency_penalty:
+          maximum: 2
+          minimum: -2
+          type:
+          - number
+          - 'null'
+        function_call:
           oneOf:
-          - nullable: true
-            type: string
-          - items:
-              $ref: '#/components/schemas/ChatMessageContentPart'
-            type: array
-        name:
-          type: string
-        role:
-          enum:
-          - system
-          - user
-          - assistant
-          - tool
-          type: string
-        tool_call_id:
-          type: string
-        tool_calls:
+          - type: string
+          - type: object
+        functions:
           items:
-            additionalProperties: true
             type: object
-          nullable: true
+          type:
+          - array
+          - 'null'
+        logit_bias:
+          additionalProperties:
+            type: number
+          type:
+          - object
+          - 'null'
+        logprobs:
+          type:
+          - boolean
+          - 'null'
+        max_completion_tokens:
+          minimum: 1
+          type:
+          - integer
+          - 'null'
+        max_tokens:
+          minimum: 1
+          type:
+          - integer
+          - 'null'
+        messages:
+          items:
+            $ref: '#/components/schemas/ChatMessage'
+          minItems: 1
           type: array
+        metadata:
+          additionalProperties: true
+          type:
+          - object
+          - 'null'
+        modalities:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+        model:
+          description: Model id returned by `GET /models`.
+          example: kimi-k2-5
+          type: string
+        n:
+          minimum: 1
+          type:
+          - integer
+          - 'null'
+        parallel_tool_calls:
+          type:
+          - boolean
+          - 'null'
+        prediction:
+          additionalProperties: true
+          type:
+          - object
+          - 'null'
+        presence_penalty:
+          maximum: 2
+          minimum: -2
+          type:
+          - number
+          - 'null'
+        prompt_cache_key:
+          type:
+          - string
+          - 'null'
+        prompt_cache_retention:
+          type:
+          - string
+          - 'null'
+        reasoning:
+          type:
+          - object
+          - 'null'
+        reasoning_effort:
+          type:
+          - string
+          - 'null'
+        response_format:
+          type:
+          - object
+          - 'null'
+        safety_identifier:
+          type:
+          - string
+          - 'null'
+        seed:
+          type:
+          - integer
+          - 'null'
+        service_tier:
+          type:
+          - string
+          - 'null'
+        stop:
+          oneOf:
+          - type: string
+          - items:
+              type: string
+            type: array
+        store:
+          type:
+          - boolean
+          - 'null'
+        stream:
+          default: false
+          type:
+          - boolean
+          - 'null'
+        stream_options:
+          additionalProperties: true
+          properties:
+            include_usage:
+              type: boolean
+          type:
+          - object
+          - 'null'
+        temperature:
+          maximum: 2
+          minimum: 0
+          type:
+          - number
+          - 'null'
+        tool_choice:
+          oneOf:
+          - type: string
+          - type: object
+        tools:
+          items:
+            type: object
+          type:
+          - array
+          - 'null'
+        top_logprobs:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+        top_p:
+          maximum: 1
+          minimum: 0
+          type:
+          - number
+          - 'null'
+        user:
+          type:
+          - string
+          - 'null'
+        verbosity:
+          type:
+          - string
+          - 'null'
+        web_search_options:
+          additionalProperties: true
+          type:
+          - object
+          - 'null'
       required:
-      - role
+      - model
+      - messages
       type: object
     PromptTokensDetails:
       additionalProperties: true
@@ -365,6 +373,30 @@ components:
         cached_tokens:
           description: Prompt tokens served from cache for this request.
           type: integer
+      type: object
+    ChatCompletionResponse:
+      additionalProperties: true
+      properties:
+        choices:
+          items:
+            $ref: '#/components/schemas/ChatCompletionChoice'
+          type: array
+        created:
+          type: integer
+        id:
+          type: string
+        model:
+          type: string
+        object:
+          type: string
+        usage:
+          $ref: '#/components/schemas/ChatCompletionUsage'
+      required:
+      - id
+      - object
+      - created
+      - model
+      - choices
       type: object
   securitySchemes:
     BearerAuth:

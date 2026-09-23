@@ -1,10 +1,7 @@
 {
   "provider": "textcortex",
   "sources": [
-    "textcortex-balance-api-openapi.yml",
-    "textcortex-chat-completions-api-openapi.yml",
-    "textcortex-models-api-openapi.yml",
-    "textcortex-responses-api-openapi.yml"
+    "_original/textcortex-openapi.json"
   ],
   "outputs": [
     "textcortex-balance-api-openapi.yml",
@@ -15,6 +12,15 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "textcortex-openapi.json: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "textcortex-balance-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "textcortex-chat-completions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "textcortex-models-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "textcortex-responses-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

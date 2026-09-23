@@ -1,7 +1,7 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
   description: OpenAI-compatible TextCortex API for model discovery, chat completions, and responses.
-  title: TextCortex Balance Responses API
+  title: TextCortex Responses API
   version: 1.2026.07.20
 servers:
 - description: Production server
@@ -83,6 +83,18 @@ paths:
       - Responses
 components:
   schemas:
+    ResponseUsage:
+      additionalProperties: true
+      properties:
+        input_tokens:
+          type: integer
+        input_tokens_details:
+          $ref: '#/components/schemas/InputTokensDetails'
+        output_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+      type: object
     ResponseRequest:
       additionalProperties: false
       properties:
@@ -96,12 +108,14 @@ components:
             minItems: 1
             type: array
         instructions:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         max_output_tokens:
           minimum: 1
-          nullable: true
-          type: integer
+          type:
+          - integer
+          - 'null'
         model:
           description: Model id returned by `GET /models`.
           example: kimi-k2-5
@@ -111,37 +125,29 @@ components:
           description: Set to false or omit. Stored responses are not supported by this endpoint.
           enum:
           - false
-          nullable: true
-          type: boolean
+          type:
+          - boolean
+          - 'null'
         stream:
           default: false
-          nullable: true
-          type: boolean
+          type:
+          - boolean
+          - 'null'
         temperature:
           maximum: 2
           minimum: 0
-          nullable: true
-          type: number
+          type:
+          - number
+          - 'null'
         top_p:
           maximum: 1
           minimum: 0
-          nullable: true
-          type: number
+          type:
+          - number
+          - 'null'
       required:
       - model
       - input
-      type: object
-    ResponseUsage:
-      additionalProperties: true
-      properties:
-        input_tokens:
-          type: integer
-        input_tokens_details:
-          $ref: '#/components/schemas/InputTokensDetails'
-        output_tokens:
-          type: integer
-        total_tokens:
-          type: integer
       type: object
     InputTokensDetails:
       additionalProperties: true
@@ -149,51 +155,6 @@ components:
         cached_tokens:
           description: Input tokens served from cache for this request.
           type: integer
-      type: object
-    ResponseInputMessage:
-      additionalProperties: true
-      properties:
-        content:
-          oneOf:
-          - type: string
-          - items:
-              additionalProperties: true
-              type: object
-            type: array
-        role:
-          enum:
-          - system
-          - developer
-          - user
-          - assistant
-          type: string
-      required:
-      - role
-      - content
-      type: object
-    OpenAIError:
-      properties:
-        error:
-          properties:
-            code:
-              nullable: true
-              type: string
-            message:
-              type: string
-            param:
-              nullable: true
-              type: string
-            type:
-              enum:
-              - invalid_request_error
-              - server_error
-              type: string
-          required:
-          - message
-          - type
-          type: object
-      required:
-      - error
       type: object
     ResponseResponse:
       additionalProperties: true
@@ -224,6 +185,53 @@ components:
       - model
       - status
       - output
+      type: object
+    ResponseInputMessage:
+      additionalProperties: true
+      properties:
+        content:
+          oneOf:
+          - type: string
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+        role:
+          enum:
+          - system
+          - developer
+          - user
+          - assistant
+          type: string
+      required:
+      - role
+      - content
+      type: object
+    OpenAIError:
+      properties:
+        error:
+          properties:
+            code:
+              type:
+              - string
+              - 'null'
+            message:
+              type: string
+            param:
+              type:
+              - string
+              - 'null'
+            type:
+              enum:
+              - invalid_request_error
+              - server_error
+              type: string
+          required:
+          - message
+          - type
+          type: object
+      required:
+      - error
       type: object
   securitySchemes:
     BearerAuth:
