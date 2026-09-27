@@ -83,18 +83,6 @@ paths:
       - Responses
 components:
   schemas:
-    ResponseUsage:
-      additionalProperties: true
-      properties:
-        input_tokens:
-          type: integer
-        input_tokens_details:
-          $ref: '#/components/schemas/InputTokensDetails'
-        output_tokens:
-          type: integer
-        total_tokens:
-          type: integer
-      type: object
     ResponseRequest:
       additionalProperties: false
       properties:
@@ -149,12 +137,71 @@ components:
       - model
       - input
       type: object
+    ResponseUsage:
+      additionalProperties: true
+      properties:
+        input_tokens:
+          type: integer
+        input_tokens_details:
+          $ref: '#/components/schemas/InputTokensDetails'
+        output_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+      type: object
+    ResponseInputMessage:
+      additionalProperties: true
+      properties:
+        content:
+          oneOf:
+          - type: string
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+        role:
+          enum:
+          - system
+          - developer
+          - user
+          - assistant
+          type: string
+      required:
+      - role
+      - content
+      type: object
     InputTokensDetails:
       additionalProperties: true
       properties:
         cached_tokens:
           description: Input tokens served from cache for this request.
           type: integer
+      type: object
+    OpenAIError:
+      properties:
+        error:
+          properties:
+            code:
+              type:
+              - string
+              - 'null'
+            message:
+              type: string
+            param:
+              type:
+              - string
+              - 'null'
+            type:
+              enum:
+              - invalid_request_error
+              - server_error
+              type: string
+          required:
+          - message
+          - type
+          type: object
+      required:
+      - error
       type: object
     ResponseResponse:
       additionalProperties: true
@@ -185,53 +232,6 @@ components:
       - model
       - status
       - output
-      type: object
-    ResponseInputMessage:
-      additionalProperties: true
-      properties:
-        content:
-          oneOf:
-          - type: string
-          - items:
-              additionalProperties: true
-              type: object
-            type: array
-        role:
-          enum:
-          - system
-          - developer
-          - user
-          - assistant
-          type: string
-      required:
-      - role
-      - content
-      type: object
-    OpenAIError:
-      properties:
-        error:
-          properties:
-            code:
-              type:
-              - string
-              - 'null'
-            message:
-              type: string
-            param:
-              type:
-              - string
-              - 'null'
-            type:
-              enum:
-              - invalid_request_error
-              - server_error
-              type: string
-          required:
-          - message
-          - type
-          type: object
-      required:
-      - error
       type: object
   securitySchemes:
     BearerAuth:

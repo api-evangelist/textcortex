@@ -85,30 +85,6 @@ paths:
       - Chat Completions
 components:
   schemas:
-    ChatCompletionChoice:
-      additionalProperties: true
-      properties:
-        finish_reason:
-          type:
-          - string
-          - 'null'
-        index:
-          type: integer
-        message:
-          $ref: '#/components/schemas/ChatMessage'
-      type: object
-    ChatCompletionUsage:
-      additionalProperties: true
-      properties:
-        completion_tokens:
-          type: integer
-        prompt_tokens:
-          type: integer
-        prompt_tokens_details:
-          $ref: '#/components/schemas/PromptTokensDetails'
-        total_tokens:
-          type: integer
-      type: object
     ChatMessage:
       additionalProperties: true
       properties:
@@ -141,31 +117,17 @@ components:
       required:
       - role
       type: object
-    OpenAIError:
+    ChatCompletionChoice:
+      additionalProperties: true
       properties:
-        error:
-          properties:
-            code:
-              type:
-              - string
-              - 'null'
-            message:
-              type: string
-            param:
-              type:
-              - string
-              - 'null'
-            type:
-              enum:
-              - invalid_request_error
-              - server_error
-              type: string
-          required:
-          - message
-          - type
-          type: object
-      required:
-      - error
+        finish_reason:
+          type:
+          - string
+          - 'null'
+        index:
+          type: integer
+        message:
+          $ref: '#/components/schemas/ChatMessage'
       type: object
     ChatMessageContentPart:
       additionalProperties: true
@@ -373,6 +335,44 @@ components:
         cached_tokens:
           description: Prompt tokens served from cache for this request.
           type: integer
+      type: object
+    ChatCompletionUsage:
+      additionalProperties: true
+      properties:
+        completion_tokens:
+          type: integer
+        prompt_tokens:
+          type: integer
+        prompt_tokens_details:
+          $ref: '#/components/schemas/PromptTokensDetails'
+        total_tokens:
+          type: integer
+      type: object
+    OpenAIError:
+      properties:
+        error:
+          properties:
+            code:
+              type:
+              - string
+              - 'null'
+            message:
+              type: string
+            param:
+              type:
+              - string
+              - 'null'
+            type:
+              enum:
+              - invalid_request_error
+              - server_error
+              type: string
+          required:
+          - message
+          - type
+          type: object
+      required:
+      - error
       type: object
     ChatCompletionResponse:
       additionalProperties: true
