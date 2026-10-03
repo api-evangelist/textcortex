@@ -83,6 +83,102 @@ paths:
       - Responses
 components:
   schemas:
+    ResponseUsage:
+      additionalProperties: true
+      properties:
+        input_tokens:
+          type: integer
+        input_tokens_details:
+          $ref: '#/components/schemas/InputTokensDetails'
+        output_tokens:
+          type: integer
+        total_tokens:
+          type: integer
+      type: object
+    ResponseResponse:
+      additionalProperties: true
+      properties:
+        created_at:
+          type: integer
+        id:
+          type: string
+        model:
+          type: string
+        object:
+          enum:
+          - response
+          type: string
+        output:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+        status:
+          type: string
+        usage:
+          $ref: '#/components/schemas/ResponseUsage'
+      required:
+      - id
+      - object
+      - created_at
+      - model
+      - status
+      - output
+      type: object
+    OpenAIError:
+      properties:
+        error:
+          properties:
+            code:
+              type:
+              - string
+              - 'null'
+            message:
+              type: string
+            param:
+              type:
+              - string
+              - 'null'
+            type:
+              enum:
+              - invalid_request_error
+              - server_error
+              type: string
+          required:
+          - message
+          - type
+          type: object
+      required:
+      - error
+      type: object
+    ResponseInputMessage:
+      additionalProperties: true
+      properties:
+        content:
+          oneOf:
+          - type: string
+          - items:
+              additionalProperties: true
+              type: object
+            type: array
+        role:
+          enum:
+          - system
+          - developer
+          - user
+          - assistant
+          type: string
+      required:
+      - role
+      - content
+      type: object
+    InputTokensDetails:
+      additionalProperties: true
+      properties:
+        cached_tokens:
+          description: Input tokens served from cache for this request.
+          type: integer
+      type: object
     ResponseRequest:
       additionalProperties: false
       properties:
@@ -136,102 +232,6 @@ components:
       required:
       - model
       - input
-      type: object
-    ResponseUsage:
-      additionalProperties: true
-      properties:
-        input_tokens:
-          type: integer
-        input_tokens_details:
-          $ref: '#/components/schemas/InputTokensDetails'
-        output_tokens:
-          type: integer
-        total_tokens:
-          type: integer
-      type: object
-    ResponseInputMessage:
-      additionalProperties: true
-      properties:
-        content:
-          oneOf:
-          - type: string
-          - items:
-              additionalProperties: true
-              type: object
-            type: array
-        role:
-          enum:
-          - system
-          - developer
-          - user
-          - assistant
-          type: string
-      required:
-      - role
-      - content
-      type: object
-    InputTokensDetails:
-      additionalProperties: true
-      properties:
-        cached_tokens:
-          description: Input tokens served from cache for this request.
-          type: integer
-      type: object
-    OpenAIError:
-      properties:
-        error:
-          properties:
-            code:
-              type:
-              - string
-              - 'null'
-            message:
-              type: string
-            param:
-              type:
-              - string
-              - 'null'
-            type:
-              enum:
-              - invalid_request_error
-              - server_error
-              type: string
-          required:
-          - message
-          - type
-          type: object
-      required:
-      - error
-      type: object
-    ResponseResponse:
-      additionalProperties: true
-      properties:
-        created_at:
-          type: integer
-        id:
-          type: string
-        model:
-          type: string
-        object:
-          enum:
-          - response
-          type: string
-        output:
-          items:
-            additionalProperties: true
-            type: object
-          type: array
-        status:
-          type: string
-        usage:
-          $ref: '#/components/schemas/ResponseUsage'
-      required:
-      - id
-      - object
-      - created_at
-      - model
-      - status
-      - output
       type: object
   securitySchemes:
     BearerAuth:
