@@ -80,6 +80,54 @@ paths:
       - Models
 components:
   schemas:
+    Model:
+      properties:
+        created:
+          description: Unix timestamp for the model release date.
+          type: integer
+        id:
+          description: TextCortex model id.
+          example: kimi-k2-5
+          type: string
+        object:
+          enum:
+          - model
+          type: string
+        owned_by:
+          example: textcortex
+          type: string
+      required:
+      - id
+      - object
+      - created
+      - owned_by
+      type: object
+    ModelDetail:
+      allOf:
+      - $ref: '#/components/schemas/Model'
+      - properties:
+          served_from_country_code:
+            description: ISO 3166-1 alpha-2 country code for the model deployment advertised by TextCortex. Europe-hosted metadata is used only when the model has an explicit Europe override.
+            type:
+            - string
+            - 'null'
+        required:
+        - served_from_country_code
+        type: object
+    ListModelsResponse:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Model'
+          type: array
+        object:
+          enum:
+          - list
+          type: string
+      required:
+      - object
+      - data
+      type: object
     OpenAIError:
       properties:
         error:
@@ -106,54 +154,6 @@ components:
       required:
       - error
       type: object
-    Model:
-      properties:
-        created:
-          description: Unix timestamp for the model release date.
-          type: integer
-        id:
-          description: TextCortex model id.
-          example: kimi-k2-5
-          type: string
-        object:
-          enum:
-          - model
-          type: string
-        owned_by:
-          example: textcortex
-          type: string
-      required:
-      - id
-      - object
-      - created
-      - owned_by
-      type: object
-    ListModelsResponse:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/Model'
-          type: array
-        object:
-          enum:
-          - list
-          type: string
-      required:
-      - object
-      - data
-      type: object
-    ModelDetail:
-      allOf:
-      - $ref: '#/components/schemas/Model'
-      - properties:
-          served_from_country_code:
-            description: ISO 3166-1 alpha-2 country code for the model deployment advertised by TextCortex. Europe-hosted metadata is used only when the model has an explicit Europe override.
-            type:
-            - string
-            - 'null'
-        required:
-        - served_from_country_code
-        type: object
   securitySchemes:
     BearerAuth:
       bearerFormat: API key

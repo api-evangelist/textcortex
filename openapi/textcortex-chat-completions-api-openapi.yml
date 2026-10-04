@@ -85,61 +85,6 @@ paths:
       - Chat Completions
 components:
   schemas:
-    ChatCompletionChoice:
-      additionalProperties: true
-      properties:
-        finish_reason:
-          type:
-          - string
-          - 'null'
-        index:
-          type: integer
-        message:
-          $ref: '#/components/schemas/ChatMessage'
-      type: object
-    PromptTokensDetails:
-      additionalProperties: true
-      properties:
-        cached_tokens:
-          description: Prompt tokens served from cache for this request.
-          type: integer
-      type: object
-    ChatCompletionUsage:
-      additionalProperties: true
-      properties:
-        completion_tokens:
-          type: integer
-        prompt_tokens:
-          type: integer
-        prompt_tokens_details:
-          $ref: '#/components/schemas/PromptTokensDetails'
-        total_tokens:
-          type: integer
-      type: object
-    ChatCompletionResponse:
-      additionalProperties: true
-      properties:
-        choices:
-          items:
-            $ref: '#/components/schemas/ChatCompletionChoice'
-          type: array
-        created:
-          type: integer
-        id:
-          type: string
-        model:
-          type: string
-        object:
-          type: string
-        usage:
-          $ref: '#/components/schemas/ChatCompletionUsage'
-      required:
-      - id
-      - object
-      - created
-      - model
-      - choices
-      type: object
     ChatMessageContentPart:
       additionalProperties: true
       properties:
@@ -157,63 +102,24 @@ components:
       required:
       - type
       type: object
-    ChatMessage:
+    PromptTokensDetails:
       additionalProperties: true
       properties:
-        content:
-          oneOf:
-          - type:
-            - string
-            - 'null'
-          - items:
-              $ref: '#/components/schemas/ChatMessageContentPart'
-            type: array
-        name:
-          type: string
-        role:
-          enum:
-          - system
-          - user
-          - assistant
-          - tool
-          type: string
-        tool_call_id:
-          type: string
-        tool_calls:
-          items:
-            additionalProperties: true
-            type: object
-          type:
-          - array
-          - 'null'
-      required:
-      - role
+        cached_tokens:
+          description: Prompt tokens served from cache for this request.
+          type: integer
       type: object
-    OpenAIError:
+    ChatCompletionChoice:
+      additionalProperties: true
       properties:
-        error:
-          properties:
-            code:
-              type:
-              - string
-              - 'null'
-            message:
-              type: string
-            param:
-              type:
-              - string
-              - 'null'
-            type:
-              enum:
-              - invalid_request_error
-              - server_error
-              type: string
-          required:
-          - message
-          - type
-          type: object
-      required:
-      - error
+        finish_reason:
+          type:
+          - string
+          - 'null'
+        index:
+          type: integer
+        message:
+          $ref: '#/components/schemas/ChatMessage'
       type: object
     ChatCompletionRequest:
       additionalProperties: false
@@ -397,6 +303,100 @@ components:
       required:
       - model
       - messages
+      type: object
+    ChatCompletionUsage:
+      additionalProperties: true
+      properties:
+        completion_tokens:
+          type: integer
+        prompt_tokens:
+          type: integer
+        prompt_tokens_details:
+          $ref: '#/components/schemas/PromptTokensDetails'
+        total_tokens:
+          type: integer
+      type: object
+    ChatMessage:
+      additionalProperties: true
+      properties:
+        content:
+          oneOf:
+          - type:
+            - string
+            - 'null'
+          - items:
+              $ref: '#/components/schemas/ChatMessageContentPart'
+            type: array
+        name:
+          type: string
+        role:
+          enum:
+          - system
+          - user
+          - assistant
+          - tool
+          type: string
+        tool_call_id:
+          type: string
+        tool_calls:
+          items:
+            additionalProperties: true
+            type: object
+          type:
+          - array
+          - 'null'
+      required:
+      - role
+      type: object
+    ChatCompletionResponse:
+      additionalProperties: true
+      properties:
+        choices:
+          items:
+            $ref: '#/components/schemas/ChatCompletionChoice'
+          type: array
+        created:
+          type: integer
+        id:
+          type: string
+        model:
+          type: string
+        object:
+          type: string
+        usage:
+          $ref: '#/components/schemas/ChatCompletionUsage'
+      required:
+      - id
+      - object
+      - created
+      - model
+      - choices
+      type: object
+    OpenAIError:
+      properties:
+        error:
+          properties:
+            code:
+              type:
+              - string
+              - 'null'
+            message:
+              type: string
+            param:
+              type:
+              - string
+              - 'null'
+            type:
+              enum:
+              - invalid_request_error
+              - server_error
+              type: string
+          required:
+          - message
+          - type
+          type: object
+      required:
+      - error
       type: object
   securitySchemes:
     BearerAuth:

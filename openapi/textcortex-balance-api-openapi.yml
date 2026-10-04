@@ -40,23 +40,6 @@ paths:
       - Balance
 components:
   schemas:
-    BalanceResponse:
-      properties:
-        currency:
-          description: API credit currency.
-          type: string
-        object:
-          enum:
-          - balance
-          type: string
-        remaining_credits:
-          description: Remaining TextCortex API credits.
-          type: number
-      required:
-      - object
-      - remaining_credits
-      - currency
-      type: object
     OpenAIError:
       properties:
         error:
@@ -82,6 +65,23 @@ components:
           type: object
       required:
       - error
+      type: object
+    BalanceResponse:
+      properties:
+        currency:
+          description: API credit currency.
+          type: string
+        object:
+          enum:
+          - balance
+          type: string
+        remaining_credits:
+          description: Remaining TextCortex API credits.
+          type: number
+      required:
+      - object
+      - remaining_credits
+      - currency
       type: object
   securitySchemes:
     BearerAuth:
