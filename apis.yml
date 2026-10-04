@@ -52,6 +52,7 @@ tags:
 - OpenAI-Compatible
 - Content Generation
 - Developer Tools
+- Foundation Models
 tags_raw:
 - Company
 - Artificial Intelligence
@@ -61,6 +62,7 @@ tags_raw:
 - OpenAI-Compatible
 - Content Generation
 - Developer Tools
+- Foundation Models
 apis:
 - aid: textcortex:textcortex-balance-api
   name: Textcortex Balance API
@@ -138,6 +140,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/textcortex-capability-edges.yml
+  name: Textcortex Business Capability Map
 - type: Website
   url: https://www.textcortex.com/
 - type: DomainSecurity
