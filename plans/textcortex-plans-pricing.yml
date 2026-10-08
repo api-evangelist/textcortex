@@ -1,0 +1,42 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-07'
+method: searched
+source: https://textcortex.com/pricing
+sources:
+- https://textcortex.com/pricing
+provenance:
+  tool: all/0-working/economics/harvest_pricing.py
+  run: 20261007T104522
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: tiered-subscription
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-07'
+published: true
+note: Monthly/Yearly toggle ('Get 2 months free'); prices exclude VAT. 14-day free trial mentioned in
+  FAQ.
+plan_count: 3
+currency: USD
+plans:
+- name: FREE
+  price_text: $ 0 / month
+  price: 0
+  currency: USD
+  period: month
+  included_quota: Knowledge Bases, Up to 50 MB storage for files, Create custom agents, Agent Skills and
+    Connectors, Deep Research
+- name: PREMIUM
+  price_text: $29.99 / user/month
+  price: 29.99
+  currency: USD
+  period: month
+  unit: user
+  included_quota: Everything included in Free, Access to all major models, Included AI model usage, Up
+    to 10 GB storage for files, Image generation capabilities
+- name: ENTERPRISE
+  price_text: Let’s talk
+  period: none
+  included_quota: Everything included in Premium, SSO / SCIM / SAML, Dedicated deployment, Centralized
+    billing, Priority support
