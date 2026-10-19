@@ -74,3 +74,34 @@
     builder: Pipedream repo (component)
   status: not-a-workflow
   arazzo: null
+- slug: textcortex-pypi
+  label: PyPI
+  partner: pypi
+  partner_name: PyPI
+  category: official SDK (Python)
+  type: register
+  channel: package-registry
+  evidence: https://pypi.org/project/textcortex/
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: PyPI (public registry JSON)
+    spec_file: null
+    language: Python
+    packages:
+    - name: textcortex
+      version: 2.0.3
+      released: '2022-10-14'
+      released_field: upload_time
+      lapsed: true
+      page: https://pypi.org/project/textcortex/
+      repo_leg: github-org:textcortex
+      publisher_leg: email:textcortex.com
+      matched_by: domain
+    current: false
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
